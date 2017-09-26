@@ -1,0 +1,139 @@
+<html>
+<body>
+<script>
+//Input to 4 way screen
+var dad = (window.location.href).split("/")[4];
+console.log(dad);
+var href = "about:blank;";
+
+//edit body
+document.body.style = "background-color: black";
+//Make canvas
+var c = document.createElement("canvas");
+c.id = "canvas";
+c.style = "border: none; position:absolute; top: 50%; left: 50%;  transform:translate(-50%,-50%);";
+if(window.innerWidth > window.innerHeight){
+	c.height = window.innerHeight;
+  c.width = window.innerHeight;
+}else if(window.innerWidth < window.innerHeight){
+	c.height = window.innerWidth;
+  c.width = window.innerWidth;
+}else{
+	c.width = window.innerWidth;
+  c.height = window.innerHeight;
+}
+document.body.appendChild(c);
+var ctx = c.getContext("2d");
+
+//make vid element
+var v = document.createElement("img");
+v.style = "visibility:hidden";
+v.id = "vidbox";
+v.src = href;
+document.body.appendChild(v);
+
+//make vid2 element right
+drawImage(90,"right");
+
+//make vid2 element top
+drawImage(180,"top");
+
+//make vid2 element left
+drawImage(270,"left");
+
+function drawImage(rotation,name)
+{
+	var ima = document.getElementById("vidbox");
+var image = document.createElement("canvas");
+if(rotation < 90 || rotation > 90 && rotation < 270){
+	image.width = ima.width;
+  image.height = ima.height;
+}else{
+	image.width = ima.height;
+  image.height = ima.width;
+}
+var imagectx = image.getContext("2d");
+imagectx.clearRect(0,0,image.width,image.height);
+imagectx.save();
+		imagectx.translate( image.width/2, image.height/2 );
+		imagectx.rotate( rotation*Math.PI/180 );
+		imagectx.drawImage( ima, -ima.width/2, -ima.height/2 , ima.width,ima.height);
+		imagectx.restore();
+var url = image.toDataURL();
+image.remove();
+var imas = document.createElement("img");
+imas.src = url;
+imas.id = name;
+imas.style = "display:none";
+document.body.appendChild(imas);
+}
+
+onresize = function(){
+	var c = document.getElementById("canvas");
+	if(window.innerWidth > window.innerHeight){
+		c.height = window.innerHeight;
+  	c.width = window.innerHeight;
+	}else if(window.innerWidth < window.innerHeight){
+		c.height = window.innerWidth;
+  	c.width = window.innerWidth;
+	}else{
+		c.width = window.innerWidth;
+  	c.height = window.innerHeight;
+	}
+  drawFrame(href);
+}
+
+function getMeta(url){   
+    var img = new Image();
+    img.onload = function(){
+    		var result = this.width + "|" + this.height;
+        document.getElementById("wh").innerHTML = result;
+    };
+    img.src = url;
+}
+
+function frameElement(src)
+{
+	document.getElementById("vidbox").src = src;
+}
+
+
+function drawFrame(src){
+	ctx.fillStyle = "black";
+	ctx.fillRect(0,0,c.width,c.height);
+	var wid = v.width;
+  var high = v.height;
+  var ratio = high/wid;
+  var otherratio = wid/high;
+  if(wid > high){
+  	var nextwid = (c.width/2-ratio)/2;
+  	var nexthig = nextwid*ratio;
+  }else{
+  	var nexthig = (c.height/2-otherratio)/2;
+  	var nextwid = nexthig*otherratio;
+  }
+  
+  ctx.beginPath();
+  ctx.strokeStyle = 'white';
+  ctx.moveTo(0,0);
+	ctx.lineTo(c.width,c.height);
+	ctx.stroke();
+  
+  ctx.beginPath();
+	ctx.moveTo(c.width,0);
+	ctx.lineTo(0,c.height);
+	ctx.stroke();
+  
+  ctx.drawImage(document.getElementById("vidbox"),c.width/2-nextwid/2,c.height*(3/4)-nexthig/2,nextwid,nexthig);
+  ctx.drawImage(document.getElementById("left"),c.width*(3/4)-nexthig/2,c.height/2-nextwid/2,nexthig,nextwid);
+  ctx.drawImage(document.getElementById("top"),c.width/2-nextwid/2,c.height*(1/4)-nexthig/2,nextwid,nexthig);
+  ctx.drawImage(document.getElementById("right"),c.width*(1/4)-nexthig/2,c.height/2-nextwid/2,nexthig,nextwid);
+  //have c.width/2-nextwid/2,c.height/2+nexthig/2,nextwid,nexthig at end of last statement
+}
+
+setTimeout(function(){
+drawFrame(href);
+},10);
+</script>
+</body>
+</html>
