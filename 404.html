@@ -1,16 +1,8 @@
 <html>
 <body>
-	<video id="daddy" width="400" controls>
-  <source src="mov_bbb.mp4" type="video/mp4">
-  <source src="mov_bbb.ogg" type="video/ogg">
-  Your browser does not support HTML5 video.
-</video>
 <script>
-
-
 //Input to 4 way screen
-var dad = (window.location.href).split("/",3);
-var href = "about:blank;";
+var href = (window.location.href).split("/",4);
 
 //edit body
 document.body.style = "background-color: black";
@@ -32,7 +24,11 @@ document.body.appendChild(c);
 var ctx = c.getContext("2d");
 
 //make vid element
-drawImage(0,"vidbox");
+var v = document.createElement("img");
+v.style = "visibility:hidden";
+v.id = "vidbox";
+v.src = href;
+document.body.appendChild(v);
 
 //make vid2 element right
 drawImage(90,"right");
@@ -45,7 +41,7 @@ drawImage(270,"left");
 
 function drawImage(rotation,name)
 {
-	var ima = document.getElementById("daddy");
+	var ima = document.getElementById("vidbox");
 var image = document.createElement("canvas");
 if(rotation < 90 || rotation > 90 && rotation < 270){
 	image.width = ima.width;
@@ -85,6 +81,15 @@ onresize = function(){
   drawFrame(href);
 }
 
+function getMeta(url){   
+    var img = new Image();
+    img.onload = function(){
+    		var result = this.width + "|" + this.height;
+        document.getElementById("wh").innerHTML = result;
+    };
+    img.src = url;
+}
+
 function frameElement(src)
 {
 	document.getElementById("vidbox").src = src;
@@ -92,7 +97,6 @@ function frameElement(src)
 
 
 function drawFrame(src){
-	var v = document.getElementById("daddy");
 	ctx.fillStyle = "black";
 	ctx.fillRect(0,0,c.width,c.height);
 	var wid = v.width;
@@ -126,16 +130,9 @@ function drawFrame(src){
   //have c.width/2-nextwid/2,c.height/2+nexthig/2,nextwid,nexthig at end of last statement
 }
 
-function render()
-{
-	setInterval(function(){
-  	drawFrame(href);
-  },1000);
-}
-
 setTimeout(function(){
-render();
-},1000);
+drawFrame(href);
+},10);
 	</script>
 	</body>
 </html>
