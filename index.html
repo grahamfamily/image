@@ -4,7 +4,7 @@
 
   </head>
   <body>
-    <video id="video1" controls width="270" style="visibility: hidden" autoplay>
+    <video id="video1" onload="play" controls width="270" style="visibility: hidden" controls loop>
       <source src="mov_bbb.mp4" type='video/mp4'>
     </video>
     <canvas id="myCanvas" style="visibility: hidden"></canvas>
@@ -12,6 +12,9 @@
       Your browser does not support the iframe element 
     </iframe>
     <script>
+      function play(){
+       document.getElementById("video1").play(); 
+      }
     	var lnk = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAACbElEQVR42u2bS0rDQBiAcySvkHuUQrsJlLRQ6jVcuXAvXYnoJbyGoEtx4w2iA0bT6WRemelMku+DH59V/L/8j0lrUQAAAAAAAAAAAAAAAAAAAAAAAAAAwPQofwMykFAiJLGEw+HQdIO0JKoEWQQyLkyPANpTiqrokYCIlPMBCXmJgJRtCREZiWBbSixit9t1RexJTeL1tRVCi8qgPQkZIkhN4u2pI4KqSN2ekJFYRlcCK23CWYGIjNdZZERku93eqmK9Xh+rqnq1lvHWXJ8E+Itobq4aOTabzbGu60/DLZD/O7XvTfMXSHEXoZIgh/g+zR3a8xuHSHEXId63kaER0spQP8kkSwH/qvi6r7RCWikqEUopCLGXISe/73Om5CNloIw26eJtV4D8sSxEPoNYSRGtDSGnQnQVIAsxzRD5gKg6LJ5JeXy5w4RChqo96YSoZHi1LjchZTHVF8nZblKqqggmwy6ZpWlRGL0UU6vqqxJXGaaZYlMFlmKLUUuxFRJim9LOj54WNOBnTXN+2M4Jm+HtunmZfsfshNR1/fzz9Y9QCY0lYFIzZLFYPIlYLpcPNokZMidix9hlWA1KkwifqziggGLsK6/TxhIiVqtVb3hc/ZM6d0QVoUu8KQwHvUm+4t1LxpAkW0iY7b+hiT92HzO5HgJmyx4BM66KKWw9UWZF4ooAk4whA9r0WERcWEbf46X2BHJCXBOqOpg5yECERkjhc9X7njWQkckAR0QmMhCRaIBrZIBJCBWRmYyAd1lLJARoVSFEICHBiouAyDcLVUKKmTyhk+uJnMQDAAAAAAAAAAAAAAAAAABANL4BaOmhq0iZBwUAAAAASUVORK5CYII=";
       setInterval(function(){
         var v = document.getElementById("video1");
@@ -21,9 +24,7 @@
 
         v.addEventListener("play", function() {i = window.setInterval(function() {ctx.drawImage(v,5,5,260,125)},20);}, false);
         v.addEventListener("pause", function() {window.clearInterval(i);}, false);
-        v.addEventListener("ended", function() {clearInterval(i);}, false); 
-        lnk = c.toDataURL();
-        window.location.href = lnk;
+        var lnk = c.toDataURL("image/png");
       },20);
     </script>
   </body>
