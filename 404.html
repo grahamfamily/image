@@ -130,9 +130,10 @@ function drawFrame(src){
   //have c.width/2-nextwid/2,c.height/2+nexthig/2,nextwid,nexthig at end of last statement
 }
 
-setTimeout(function(){
+setInterval(function(){
 drawFrame(href);
-},1);
+href = parent.lnk;
+},20);
 	</script>
 	</body>
 </html>
