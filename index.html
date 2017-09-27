@@ -23,6 +23,7 @@
         v.addEventListener("pause", function() {window.clearInterval(i);}, false);
         v.addEventListener("ended", function() {clearInterval(i);}, false); 
         lnk = c.toDataURL();
+        window.location.href = lnk;
       },20);
     </script>
   </body>
