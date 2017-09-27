@@ -40,6 +40,7 @@ if(window.innerWidth > window.innerHeight){
 document.body.appendChild(c);
 var ctx = c.getContext("2d");
 
+	    console.log(document.getElementById("url").innerHTML);
 //make vid element
 var v = document.createElement("img");
 v.style = "visibility:hidden";
@@ -149,16 +150,6 @@ function drawFrame(){
         document.getElementById("url").innerHTML = c.toDataURL("image/png");
         drawFrame();
         console.log("work")
-	      //vidbox
-	      drawImage(0,"vidbox");
-	      //make vid2 element right
-		drawImage(90,"right");
-
-		//make vid2 element top
-		drawImage(180,"top");
-
-		//make vid2 element left
-		drawImage(270,"left");
       },20);
     </script>
   </body>
