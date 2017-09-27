@@ -16,7 +16,7 @@
       myVid=document.getElementById("video1");
       myVid.oncanplay=playvideo();
 </script> 
-    <div id="url" style="visibility: hidden"></div>
+    <div id="url" style="display:none;"></div>
     <canvas id="myCanvas" style="visibility: hidden"></canvas>
     <script>
 //Input to 4 way screen
@@ -55,7 +55,7 @@ drawImage(180,"top");
 
 //make vid2 element left
 drawImage(270,"left");
-
+	    
 function drawImage(rotation,name)
 {
 	var ima = document.getElementById("vidbox");
@@ -76,11 +76,16 @@ imagectx.save();
 		imagectx.restore();
 var url = image.toDataURL();
 image.remove();
+if(document.getElementById(name) == null){
 var imas = document.createElement("img");
 imas.src = url;
 imas.id = name;
 imas.style = "display:none";
 document.body.appendChild(imas);
+}else{
+	var imas = document.getElementById(name);
+imas.src = url;
+}
 }
 
 onresize = function(){
@@ -144,6 +149,16 @@ function drawFrame(){
         document.getElementById("url").innerHTML = c.toDataURL("image/png");
         drawFrame();
         console.log("work")
+	      //vidbox
+	      drawImage(0,"vidbox");
+	      //make vid2 element right
+		drawImage(90,"right");
+
+		//make vid2 element top
+		drawImage(180,"top");
+
+		//make vid2 element left
+		drawImage(270,"left");
       },20);
     </script>
   </body>
